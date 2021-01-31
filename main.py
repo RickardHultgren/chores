@@ -17,12 +17,12 @@ def Get_data():
 
 def Insert_data():
 	db = sqlite3.connect('test.db')
-	db.execute('insert into stock (Product_Id,Product_Name,Sell_Price,Quantity) values (?,?,?,?)',[PRODUCT_CATEGORY.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get()])
+	db.execute('insert into stock (Product_Id,Product_Name,Product_Category,Product_Begin,Product_Expire,Product_Quantity,Product_Unit,Product_Place) values (?,?,?,?,?,?,?,?,?)',[PRODUCT_ID_VALUE.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_CATEGORY.get(),PRODUCT_BEGIN.get(),PRODUCT_EXPIRE.get(),PRODUCT_QUANTITY.get(),PRODUCT_UNIT.get(),PRODUCT_PLACE.get()])
 	db.commit()
 
 def Update_data():
 	db = sqlite3.connect('test.db')
-	db.execute('update stock set Product_Id = ? ,Product_Name = ?,Sell_Price = ?,Quantity = ?  where Product_Id = ?',(PRODUCT_CATEGORY.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get(),PRODUCT_CATEGORY.get()))
+	db.execute('update stock set Product_Id = ? ,Product_Name = ?,Product_Begin = ?,Product_Expire = ?  roduct_Quantity = ?,Product_Unit = ?,Product_Place where Product_Id = ?',(PRODUCT_ID_VALUE.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_CATEGORY.get(),PRODUCT_BEGIN.get(),PRODUCT_EXPIRE.get(),PRODUCT_QUANTITY.get(),PRODUCT_UNIT.get(),PRODUCT_PLACE.get()))
 	db.commit()
 
 def Delete_data():
@@ -30,12 +30,14 @@ def Delete_data():
 	db.execute('delete from stock where Product_Id = ?',(PRODUCT_CATEGORY.get(),))
 	db.commit()
 
-
-global PRODUCT_QUANTITY_VALUE
-global PRODUCT_CATEGORY
-global PRODUCT_PRICE_VALUE
+global PRODUCT_ID_VALUE
 global PRODUCT_NAME_VALUE
-
+global PRODUCT_CATEGORY
+global PRODUCT_BEGIN
+global PRODUCT_EXPIRE
+global PRODUCT_QUANTITY
+global PRODUCT_UNIT
+global PRODUCT_PLACE
 
 if __name__=='__main__':
     for x in range(0, argv_len):
