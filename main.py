@@ -17,22 +17,22 @@ def Get_data():
 
 def Insert_data():
 	db = sqlite3.connect('test.db')
-	db.execute('insert into stock (Product_Id,Product_Name,Sell_Price,Quantity) values (?,?,?,?)',[PRODUCT_ID_VALUE.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get()])
+	db.execute('insert into stock (Product_Id,Product_Name,Sell_Price,Quantity) values (?,?,?,?)',[PRODUCT_CATEGORY.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get()])
 	db.commit()
 
 def Update_data():
 	db = sqlite3.connect('test.db')
-	db.execute('update stock set Product_Id = ? ,Product_Name = ?,Sell_Price = ?,Quantity = ?  where Product_Id = ?',(PRODUCT_ID_VALUE.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get(),PRODUCT_ID_VALUE.get()))
+	db.execute('update stock set Product_Id = ? ,Product_Name = ?,Sell_Price = ?,Quantity = ?  where Product_Id = ?',(PRODUCT_CATEGORY.get(),PRODUCT_NAME_VALUE.get(),PRODUCT_PRICE_VALUE.get(),PRODUCT_QUANTITY_VALUE.get(),PRODUCT_CATEGORY.get()))
 	db.commit()
 
 def Delete_data():
 	db = sqlite3.connect('test.db')
-	db.execute('delete from stock where Product_Id = ?',(PRODUCT_ID_VALUE.get(),))
+	db.execute('delete from stock where Product_Id = ?',(PRODUCT_CATEGORY.get(),))
 	db.commit()
 
 
 global PRODUCT_QUANTITY_VALUE
-global PRODUCT_ID_VALUE
+global PRODUCT_CATEGORY
 global PRODUCT_PRICE_VALUE
 global PRODUCT_NAME_VALUE
 
@@ -45,10 +45,10 @@ if __name__=='__main__':
             filenames.append(filename)
             filecheck = True
         if sys.argv[x] == "-h":
-            print ('-h for help\n-f file\n-graph\n-start "start node"\n-steps amount of steps')
-        if sys.argv[x] == "-exe":
+            print ('-h for help\n-f file\n-l list items\n-a add item')
+        if sys.argv[x] == "-a":
             mode_exe = True
-        if sys.argv[x] == "-graph":
+        if sys.argv[x] == "-l":
             mode_graph = True                    
         if sys.argv[x] == "-statements":
             mode_state = True    
@@ -56,9 +56,4 @@ if __name__=='__main__':
             steps = int(sys.argv[x+1])
         if sys.argv[x] == "-start":
             starts.append(sys.argv[x+1])
-    # Execute functions that are connected to the arguments:
-    if filecheck == True:
-        lexer()
-    else:
-        print("Please add file names.")
 
