@@ -8,11 +8,11 @@ def Get_data():
 	global i
 	global j
 	i=0
-	tree.delete(*tree.get_children())
+	#tree.delete(*tree.get_children())
 	db = sqlite3.connect('test.db')
 	cursor = db.execute('select * from stock')
 	for row in cursor:
-		tree.insert('', 'end', text="Item_"+str(i), values=(row[0],row[1],row[2],row[3]))
+		tr = sys.argv[x+1]', text="Item_"+str(i), values=(row[0],row[1],row[2],row[3]))
 		i=i+1
 
 def Insert_data():
@@ -27,7 +27,7 @@ def Update_data():
 
 def Delete_data():
 	db = sqlite3.connect('test.db')
-	db.execute('delete from stock where Product_Id = ?',(PRODUCT_CATEGORY.get(),))
+	db.execute('delete from stock where Product_Id = ?',( PRODUCT_ID_VALUE.get(),))
 	db.commit()
 
 global PRODUCT_ID_VALUE
@@ -40,6 +40,16 @@ global PRODUCT_UNIT
 global PRODUCT_PLACE
 
 if __name__=='__main__':
+global PRODUCT_ID_VALUE
+global PRODUCT_NAME_VALUE
+global PRODUCT_CATEGORY
+global PRODUCT_BEGIN
+global PRODUCT_EXPIRE
+global PRODUCT_QUANTITY
+global PRODUCT_UNIT
+global PRODUCT_PLACE
+global i
+dblength = i
     for x in range(0, argv_len):
         if sys.argv[x] == "-f":
             CLI_filename = sys.argv[x+1]
@@ -47,16 +57,31 @@ if __name__=='__main__':
             filenames.append(filename)
             filecheck = True
         if sys.argv[x] == "-h":
-            print ('-h for help\n-f file\n-l list items\n-a add item')
-        if sys.argv[x] == "-a":
-            mode_exe = True
-        if sys.argv[x] == "-l":
-            mode_graph = True                    
-        if sys.argv[x] == "-statements":
-            mode_state = True    
-        if sys.argv[x] == "-steps":
-            steps = int(sys.argv[x+1])
-        if sys.argv[x] == "-start":
-            starts.append(sys.argv[x+1])
+            print ('-h for help\n-f file\n-l list items\n-add add item')
+        if sys.argv[x] == "-add":
+PRODUCT_ID_VALUE = dblength+1
+PRODUCT_NAME_VALUE = sys.argv[x+1]
+PRODUCT_CATEGORY = sys.argv[x+2]
+PRODUCT_BEGIN = sys.argv[x+3]
+PRODUCT_EXPIRE = sys.argv[x+4]
+PRODUCT_QUANTITY = sys.argv[x+5]
+PRODUCT_UNIT = sys.argv[x+6]
+PRODUCT_PLACE = sys.argv[x+7]
+Insert_data()
+        if sys.argv[x] == "-del":
+            PRODUCT_ID_VALUE = sys.argv[x+1]  
+            Delete_data()
+        if sys.argv[x] == "-update":
+PRODUCT_ID_VALUE = sys.argv[x+1]
+###identify by name or number?
+PRODUCT_NAME_VALUE = sys.argv[x+1]
+PRODUCT_CATEGORY = sys.argv[x+2]
+PRODUCT_BEGIN = sys.argv[x+3]
+PRODUCT_EXPIRE = sys.argv[x+4]
+PRODUCT_QUANTITY = sys.argv[x+5]
+PRODUCT_UNIT = sys.argv[x+6]
+PRODUCT_PLACE = sys.argv[x+7]
+Update_data()
+        
 
 	
