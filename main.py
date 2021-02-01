@@ -34,7 +34,9 @@ def Insert_data():
 	#conn  = sqlite3.connect('test.db')
 	#c = conn.cursor()
 	global c
-	c.execute("INSERT INTO stock VALUES ( ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
+	c.execute("INSERT INTO RecordONE (Number, Name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, )", 
+		(ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	#c.execute("INSERT INTO stock VALUES ( ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	c.commit()
 
 def Update_data():
@@ -54,11 +56,12 @@ def Delete_data():
 if __name__=='__main__':
 	#Get_data()
 	global c
-	try:
-		c.execute('''CREATE TABLE stocks
-			(item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place)''')
-	except:
-		pass
+	c.execute('CREATE TABLE IF NOT EXISTS RecordONE (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text))')
+	#try:
+	#	c.execute('''CREATE TABLE stocks
+	#		(item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)''')
+	#except:
+	#	pass
 	conn.commit
 	conn.close
 	dblength = i
@@ -95,4 +98,6 @@ if __name__=='__main__':
 			Update_data()
 		if sys.argv[x] == "-l":
 			Get_data()
+	
+
 	
