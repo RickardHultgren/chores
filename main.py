@@ -25,8 +25,12 @@ def Get_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
+	cursor = conn.execute("SELECT * FROM Things") 
+	for row in cursor: 
+	#	print row, 
+  
 	#cursor = db.execute('select * from stock',[1,2,3,4,5,6,7])
-	for row in c.execute('SELECT * FROM stocks ORDER BY item_name'):
+	#for row in c.execute('SELECT * FROM stocks ORDER BY item_name'):
 		print(row)
 		#i=i+1
 
@@ -37,8 +41,16 @@ def Insert_data():
 
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()	
-	c.execute('CREATE TABLE IF NOT EXISTS RecordONE (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)')
-	c.execute("INSERT INTO RecordONE (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	i = 0
+	try:
+		cursor = conn.execute("SELECT * FROM Things") 
+		for row in cursor: 
+			i = i + 1
+		ITEM_ID_VALUE = i
+	except:
+		pass
+	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)')
+	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
 	#c.execute("INSERT INTO stock VALUES ( ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
@@ -47,6 +59,8 @@ def Update_data():
 	c = conn.cursor()
 	#global c
 	c.execute('update stock set ITEM_Id = ? ,ITEM_Name = ?,ITEM_Begin = ?,ITEM_Expire = ?  roduct_Quantity = ?,ITEM_Unit = ?,ITEM_Place where ITEM_Id = ?',(ITEM_ID_VALUE.get(),ITEM_NAME_VALUE.get(),ITEM_CATEGORY.get(),ITEM_BEGIN.get(),ITEM_EXPIRE.get(),ITEM_QUANTITY.get(),ITEM_UNIT.get(),ITEM_PLACE.get()))
+	# update the student record 
+	conn.execute("UPDATE Student SET name = 'Sam' where unix='B113059'") 
 	conn.commit()
 
 def Delete_data():
@@ -103,6 +117,10 @@ if __name__=='__main__':
 			Update_data()
 		if sys.argv[x] == "-l":
 			Get_data()
+	
+
+	
+
 	
 
 	
