@@ -37,9 +37,8 @@ def Insert_data():
 
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()	
-	c.execute('CREATE TABLE IF NOT EXISTS RecordONE (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text))')
-	c.execute("INSERT INTO RecordONE (Number, Name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, )", 
-		(ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	c.execute('CREATE TABLE IF NOT EXISTS RecordONE (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)')
+	c.execute("INSERT INTO RecordONE (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
 	#c.execute("INSERT INTO stock VALUES ( ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	c.commit()
 
