@@ -1,2 +1,2 @@
-# store
+# Goods
 An inventory system
