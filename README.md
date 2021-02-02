@@ -1,2 +1,2 @@
-# Goods
+# Chores
 An inventory system
