@@ -5,7 +5,7 @@ import sys
 
 #******************************** Get DATA *******************************
 i=0
-ITEM_ID_VALUE = str()
+ITEM_ID = str()
 ITEM_NAME_VALUE = str()
 ITEM_CATEGORY = str()
 ITEM_BEGIN = str()
@@ -46,21 +46,19 @@ def Insert_data():
 		cursor = conn.execute("SELECT * FROM Things") 
 		for row in cursor: 
 			i = i + 1
-		ITEM_ID_VALUE = i
+		ITEM_ID = i
 	except:
 		pass
 	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)')
-	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
-	#c.execute("INSERT INTO stock VALUES ( ITEM_ID_VALUE , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
+	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
 def Update_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('update stock set ITEM_Id = ? ,ITEM_Name = ?,ITEM_Begin = ?,ITEM_Expire = ?  roduct_Quantity = ?,ITEM_Unit = ?,ITEM_Place where ITEM_Id = ?',(ITEM_ID_VALUE.get(),ITEM_NAME_VALUE.get(),ITEM_CATEGORY.get(),ITEM_BEGIN.get(),ITEM_EXPIRE.get(),ITEM_QUANTITY.get(),ITEM_UNIT.get(),ITEM_PLACE.get()))
-	# update the student record 
-	conn.execute("UPDATE Student SET name = 'Sam' where unix='B113059'") 
+	c.execute('UPDATE Things SET item_id = ? ,item_name = ?,item_begin = ?,item_expire = ?, product_quantity = ?,item_unit = ?,item_place where item_id = ?', ITEM_ID)
 	conn.commit()
 
 def Delete_data():
@@ -93,20 +91,29 @@ if __name__=='__main__':
 		if sys.argv[x] == "-h":
 			print ('-h for help\n-f file\n-l list items\n-a add item\n-u update\n-d delete')
 		if sys.argv[x] == "-a":
-			ITEM_ID_VALUE = str(dblength+1)
-			ITEM_NAME_VALUE = raw_input("Name of the item:")
-			ITEM_CATEGORY = raw_input("Category of the item:")
-			ITEM_BEGIN = raw_input("Start date:")
-			ITEM_EXPIRE = raw_input("Expiring date:")
-			ITEM_QUANTITY = raw_input("Quantity:")
-			ITEM_UNIT = raw_input("Unit:")
-			ITEM_PLACE = raw_input("Place:")
-			Insert_data()
+			ITEM_ID = str(dblength+1)
+			try:
+				ITEM_NAME_VALUE = input("Name of the item:")
+				ITEM_CATEGORY = input("Category of the item:")
+				ITEM_BEGIN = input("Start date:")
+				ITEM_EXPIRE = input("Expiring date:")
+				ITEM_QUANTITY = input("Quantity:")
+				ITEM_UNIT = input("Unit:")
+				ITEM_PLACE = input("Place:")
+			except:
+				ITEM_NAME_VALUE = raw_input("Name of the item:")
+				ITEM_CATEGORY = raw_input("Category of the item:")
+				ITEM_BEGIN = raw_input("Start date:")
+				ITEM_EXPIRE = raw_input("Expiring date:")
+				ITEM_QUANTITY = raw_input("Quantity:")
+				ITEM_UNIT = raw_input("Unit:")
+				ITEM_PLACE = raw_input("Place:")
+			Insert_data()			
 		if sys.argv[x] == "-d":
-			ITEM_ID_VALUE = sys.argv[x+1]  
+			ITEM_ID = sys.argv[x+1]  
 			Delete_data()
 		if sys.argv[x] == "-u":
-			ITEM_ID_VALUE = sys.argv[x+1]
+			ITEM_ID = sys.argv[x+1]
 			ITEM_NAME_VALUE = raw_input("Name of the item:")
 			ITEM_CATEGORY = raw_input("Category of the item:")
 			ITEM_BEGIN = raw_input("Start date:")
