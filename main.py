@@ -49,8 +49,8 @@ def Insert_data():
 		ITEM_ID = i
 	except:
 		pass
-	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_Unit text,item_place text)')
-	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_Unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
+	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
 	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
@@ -58,7 +58,7 @@ def Update_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('UPDATE Things SET item_name = ?,item_begin = ?,item_expire = ?, product_quantity = ?,item_unit = ?,item_place where item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
+	c.execute('UPDATE Things SET( item_name = ?,item_begin = ?,item_expire = ?, product_quantity = ?,item_unit = ?,item_place ) WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
 	conn.commit()
 
 def Delete_data():
@@ -114,13 +114,23 @@ if __name__=='__main__':
 			Delete_data()
 		if sys.argv[x] == "-u":
 			ITEM_ID = sys.argv[x+1]
-			ITEM_NAME_VALUE = raw_input("Name of the item:")
-			ITEM_CATEGORY = raw_input("Category of the item:")
-			ITEM_BEGIN = raw_input("Start date:")
-			ITEM_EXPIRE = raw_input("Expiring date:")
-			ITEM_QUANTITY = raw_input("Quantity:")
-			ITEM_UNIT = raw_input("Unit:")
-			ITEM_PLACE = raw_input("Place:")
+			try:
+				ITEM_NAME_VALUE = input("Name of the item:")
+				ITEM_CATEGORY = input("Category of the item:")
+				ITEM_BEGIN = input("Start date:")
+				ITEM_EXPIRE = input("Expiring date:")
+				ITEM_QUANTITY = input("Quantity:")
+				ITEM_UNIT = input("Unit:")
+				ITEM_PLACE = input("Place:")
+			except:
+				ITEM_NAME_VALUE = raw_input("Name of the item:")
+				ITEM_CATEGORY = raw_input("Category of the item:")
+				ITEM_BEGIN = raw_input("Start date:")
+				ITEM_EXPIRE = raw_input("Expiring date:")
+				ITEM_QUANTITY = raw_input("Quantity:")
+				ITEM_UNIT = raw_input("Unit:")
+				ITEM_PLACE = raw_input("Place:")
+			
 			Update_data()
 		if sys.argv[x] == "-l":
 			Get_data()
