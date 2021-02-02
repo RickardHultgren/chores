@@ -65,7 +65,7 @@ def Delete_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('delete from stock where ITEM_Id = ?',( ITEM_ID_VALUE.get(),))
+	c.execute('delete from Things where item_id = ?',( ITEM_ID_VALUE))
 	conn.commit()
 
 if __name__=='__main__':
