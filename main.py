@@ -58,7 +58,7 @@ def Update_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('UPDATE Things SET( item_name = ?,item_begin = ?,item_expire = ?, product_quantity = ?,item_unit = ?,item_place ) WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
+	c.execute('UPDATE Things SET item_name = ?, item_category = ?, item_begin = ?,item_expire = ?, product_quantity = ?,item_unit = ?,item_place = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
 	conn.commit()
 
 def Delete_data():
