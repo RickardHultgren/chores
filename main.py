@@ -21,11 +21,12 @@ argv_len = len(sys.argv)
 def Get_data():
 	global i
 	global j
-	i=0
+	i=1
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	cursor = conn.execute("SELECT * FROM Things") 
+	cursor = conn.execute("SELECT * FROM Things ORDER BY item_expire ASC")
+	#cursor = conn.execute("SELECT * FROM Things") 
 	for row in cursor: 
 	#	print row, 
   
@@ -41,7 +42,7 @@ def Insert_data():
 
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()	
-	i = 0
+	i = 1
 	try:
 		cursor = conn.execute("SELECT * FROM Things") 
 		for row in cursor: 
@@ -66,7 +67,16 @@ def Delete_data():
 	c = conn.cursor()
 	#global c
 	c.execute('delete from Things where item_id = ?',( ITEM_ID))
+	try:
+		c.execute('create table temp_Things as select item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from Things order by item_id')
+	except:
+		pass
+	c.execute('drop table Things')
+	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
+	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Things order by rowid")
 	conn.commit()
+
+
 
 if __name__=='__main__':
 	#Get_data()
@@ -134,6 +144,51 @@ if __name__=='__main__':
 			Update_data()
 		if sys.argv[x] == "-l":
 			Get_data()
+
+		if sys.argv[x] == "-ra":
+			ITEM_ID = str(dblength+1)
+			try:
+				ITEM_NAME_VALUE = input("Name of the item:")
+				ITEM_CATEGORY = input("Category of the item:")
+				ITEM_BEGIN = input("Start date:")
+				ITEM_EXPIRE = input("Expiring date:")
+				ITEM_QUANTITY = input("Quantity:")
+				ITEM_UNIT = input("Unit:")
+				ITEM_PLACE = input("Place:")
+			except:
+				ITEM_NAME_VALUE = raw_input("Name of the item:")
+				ITEM_CATEGORY = raw_input("Category of the item:")
+				ITEM_BEGIN = raw_input("Start date:")
+				ITEM_EXPIRE = raw_input("Expiring date:")
+				ITEM_QUANTITY = raw_input("Quantity:")
+				ITEM_UNIT = raw_input("Unit:")
+				ITEM_PLACE = raw_input("Place:")
+			Insert_recipe()			
+		if sys.argv[x] == "-rd":
+			ITEM_ID = sys.argv[x+1]  
+			Delete_data()
+		if sys.argv[x] == "-ru":
+			ITEM_ID = sys.argv[x+1]
+			try:
+				ITEM_NAME_VALUE = input("Name of the item:")
+				ITEM_CATEGORY = input("Category of the item:")
+				ITEM_BEGIN = input("Start date:")
+				ITEM_EXPIRE = input("Expiring date:")
+				ITEM_QUANTITY = input("Quantity:")
+				ITEM_UNIT = input("Unit:")
+				ITEM_PLACE = input("Place:")
+			except:
+				ITEM_NAME_VALUE = raw_input("Name of the item:")
+				ITEM_CATEGORY = raw_input("Category of the item:")
+				ITEM_BEGIN = raw_input("Start date:")
+				ITEM_EXPIRE = raw_input("Expiring date:")
+				ITEM_QUANTITY = raw_input("Quantity:")
+				ITEM_UNIT = raw_input("Unit:")
+				ITEM_PLACE = raw_input("Place:")
+			
+			Update_recipe()
+		if sys.argv[x] == "-rl":
+			Get_recipe()
 	
 
 	
