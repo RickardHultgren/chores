@@ -3,6 +3,7 @@ import sqlite3
 import os
 import sys
 
+
 #******************************** Get DATA *******************************
 i=0
 ITEM_ID = str()
@@ -41,14 +42,10 @@ def Get_data(subarg):
 		cursor = conn.execute("SELECT * FROM Things ORDER BY item_unit ASC")
 	if subarg == "pla":
 		cursor = conn.execute("SELECT * FROM Things ORDER BY item_place ASC")
-	
+	print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
 	for row in cursor: 
-	#	print row, 
-  
-	#cursor = db.execute('select * from stock',[1,2,3,4,5,6,7])
-	#for row in c.execute('SELECT * FROM stocks ORDER BY item_name'):
-		print(row)
-		#i=i+1
+		print("{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
+		#print(row)
 
 def Insert_data():
 	conn  = sqlite3.connect('test.db')
