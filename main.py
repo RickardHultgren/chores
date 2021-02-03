@@ -90,7 +90,6 @@ def Delete_data():
 		c.execute('create table temp_Things as select item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from Things order by item_id')
 	except:
 		pass
-	try:
 	c.execute('drop table Things')
 	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
 	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Things order by rowid")
@@ -228,17 +227,17 @@ if __name__=='__main__':
 					for index2, cell in enumerate(row):
 						if index2 == 1:					
 							ITEM_NAME_VALUE = rlinput("Name of the item:",cell)
-						if index == 2:
-							ITEM_CATEGORY = rlnput("Category of the item:",cell)
-						if index == 3:
+						if index2 == 2:
+							ITEM_CATEGORY = rlinput("Category of the item:",cell)
+						if index2 == 3:
 							ITEM_BEGIN = rlinput("Start date:",cell)
-						if index == 4:
+						if index2 == 4:
 							ITEM_EXPIRE = rlinput("Expiring date:",cell)
-						if index == 5:
+						if index2 == 5:
 							ITEM_QUANTITY = rlinput("Quantity:",cell)
-						if index == 6:
+						if index2 == 6:
 							ITEM_UNIT = rlinput("Unit:",cell)
-						if index == 7:
+						if index2 == 7:
 							ITEM_PLACE = rlinput("Place:",cell)
 
 			Update_data()
