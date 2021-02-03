@@ -18,15 +18,30 @@ argv_len = len(sys.argv)
 #conn  = sqlite3.connect('test.db')
 #c = conn.cursor()
 
-def Get_data():
+def Get_data(subarg):
 	global i
 	global j
 	i=1
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	cursor = conn.execute("SELECT * FROM Things ORDER BY item_expire ASC")
-	#cursor = conn.execute("SELECT * FROM Things") 
+	if subarg == "id":
+		cursor = conn.execute("SELECT * FROM Things") 
+	if subarg == "nam":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_name ASC")
+	if subarg == "cat":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_category ASC")
+	if subarg == "beg":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_begin ASC")
+	if subarg == "exp":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_expire ASC")
+	if subarg == "qua":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_quantity ASC")
+	if subarg == "uni":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_unit ASC")
+	if subarg == "pla":
+		cursor = conn.execute("SELECT * FROM Things ORDER BY item_place ASC")
+	
 	for row in cursor: 
 	#	print row, 
   
@@ -143,7 +158,25 @@ if __name__=='__main__':
 			
 			Update_data()
 		if sys.argv[x] == "-l":
-			Get_data()
+			subarg = str("id")
+			try:
+				if sys.argv[x+1] == "nam":
+					subarg = str("nam")
+				if sys.argv[x+1] == "cat":
+					subarg = str("cat")
+				if sys.argv[x+1] == "beg":
+					subarg = str("beg")
+				if sys.argv[x+1] == "exp":
+					subarg = str("exp")
+				if sys.argv[x+1] == "qua":
+					subarg = str("qua")
+				if sys.argv[x+1] == "uni":
+					subarg = str("uni")
+				if sys.argv[x+1] == "pla":
+					subarg = str("pla")								
+			except:
+				pass
+			Get_data(subarg)
 
 		if sys.argv[x] == "-ra":
 			ITEM_ID = str(dblength+1)
