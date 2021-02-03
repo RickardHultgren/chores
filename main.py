@@ -88,6 +88,79 @@ def Delete_data():
 	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Things order by rowid")
 	conn.commit()
 
+#********************************************** RECIPRES
+
+def Get_recipe(subarg):
+	global i
+	global j
+	i=1
+	conn  = sqlite3.connect('test.db')
+	c = conn.cursor()
+	#global c
+	if subarg == "id":
+		cursor = conn.execute("SELECT * FROM Recipes") 
+	if subarg == "nam":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_name ASC")
+	if subarg == "cat":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_category ASC")
+	if subarg == "beg":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_begin ASC")
+	if subarg == "exp":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_expire ASC")
+	if subarg == "qua":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_quantity ASC")
+	if subarg == "uni":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_unit ASC")
+	if subarg == "pla":
+		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_place ASC")
+	print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
+	for row in cursor: 
+		print("{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
+		#print(row)
+
+def Insert_recipe():
+	conn  = sqlite3.connect('test.db')
+	c = conn.cursor()
+	#global c
+
+	conn  = sqlite3.connect('test.db')
+	c = conn.cursor()	
+	i = 1
+	try:
+		cursor = conn.execute("SELECT * FROM Recipes") 
+		for row in cursor: 
+			i = i + 1
+		ITEM_ID = i
+	except:
+		pass
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
+	c.execute("INSERT INTO Recipes (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
+	conn.commit()
+
+def Update_recipe():
+	conn  = sqlite3.connect('test.db')
+	c = conn.cursor()
+	#global c
+	c.execute('UPDATE Recipes SET item_name = ?, item_category = ?, item_begin = ?,item_expire = ?, item_quantity = ?,item_unit = ?,item_place = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
+	conn.commit()
+
+def Delete_recipe():
+	conn  = sqlite3.connect('test.db')
+	c = conn.cursor()
+	#global c
+	c.execute('delete from Recipes where item_id = ?',( ITEM_ID))
+	try:
+		c.execute('create table temp_Recipes as select item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from Recipes order by item_id')
+	except:
+		pass
+	c.execute('drop table Recipes')
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
+	c.execute("INSERT INTO Recipes (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Recipes order by rowid")
+	conn.commit()
+
+
+
 
 
 if __name__=='__main__':
