@@ -2,6 +2,13 @@
 import sqlite3
 import os
 import sys
+import readline
+def rlinput(prompt, prefill=''):
+   readline.set_startup_hook(lambda: readline.insert_text(prefill))
+   try:
+      return raw_input(prompt)
+   finally:
+      readline.set_startup_hook()
 
 
 #******************************** Get DATA *******************************
@@ -83,6 +90,7 @@ def Delete_data():
 		c.execute('create table temp_Things as select item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from Things order by item_id')
 	except:
 		pass
+	try:
 	c.execute('drop table Things')
 	c.execute('CREATE TABLE IF NOT EXISTS Things (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
 	c.execute("INSERT INTO Things (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Things order by rowid")
@@ -209,23 +217,30 @@ if __name__=='__main__':
 			Delete_data()
 		if sys.argv[x] == "-u":
 			ITEM_ID = sys.argv[x+1]
-			try:
-				ITEM_NAME_VALUE = input("Name of the item:")
-				ITEM_CATEGORY = input("Category of the item:")
-				ITEM_BEGIN = input("Start date:")
-				ITEM_EXPIRE = input("Expiring date:")
-				ITEM_QUANTITY = input("Quantity:")
-				ITEM_UNIT = input("Unit:")
-				ITEM_PLACE = input("Place:")
-			except:
-				ITEM_NAME_VALUE = raw_input("Name of the item:")
-				ITEM_CATEGORY = raw_input("Category of the item:")
-				ITEM_BEGIN = raw_input("Start date:")
-				ITEM_EXPIRE = raw_input("Expiring date:")
-				ITEM_QUANTITY = raw_input("Quantity:")
-				ITEM_UNIT = raw_input("Unit:")
-				ITEM_PLACE = raw_input("Place:")
 			
+			
+			conn  = sqlite3.connect('test.db')
+			cursor = conn.execute("SELECT * FROM Things") 
+			c = conn.cursor()
+			for index, row in enumerate(cursor): 
+				nr = int(sys.argv[x+1])
+				if index == (nr-1):
+					for index2, cell in enumerate(row):
+						if index2 == 1:					
+							ITEM_NAME_VALUE = rlinput("Name of the item:",cell)
+						if index == 2:
+							ITEM_CATEGORY = rlnput("Category of the item:",cell)
+						if index == 3:
+							ITEM_BEGIN = rlinput("Start date:",cell)
+						if index == 4:
+							ITEM_EXPIRE = rlinput("Expiring date:",cell)
+						if index == 5:
+							ITEM_QUANTITY = rlinput("Quantity:",cell)
+						if index == 6:
+							ITEM_UNIT = rlinput("Unit:",cell)
+						if index == 7:
+							ITEM_PLACE = rlinput("Place:",cell)
+
 			Update_data()
 		if sys.argv[x] == "-l":
 			subarg = str("id")
