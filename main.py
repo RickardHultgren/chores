@@ -23,7 +23,7 @@ ITEM_UNIT = str()
 ITEM_PLACE = str()
 REC_NAME_VALUE = str()
 REC_CATEGORY = str()
-REC_ING = dict("ingredients":ingredients(list), "amounts":amounts(list), "units":units(list))
+REC_ING = {"ingredients":ingredients(list), "amounts":amounts(list), "units":units(list)}
 REC_INS = str()
 REC_TIME = str()
 REC_UNIT = str()
@@ -290,18 +290,15 @@ if __name__=='__main__':
 		if sys.argv[x] == "-rd":
 			REC_ID = sys.argv[x+1]  
 			Delete_data()
-		if sys.argv[x] == "-ru":
-			REC_ID = sys.argv[x+1]
-			try:
-				REC_NAME_VALUE = input("Name of the recipe:")
+    if sys.argv[x] == "-ru":
+      REC_ID = sys.argv[x+1]
+      try:
+        count2 = 0 
+        REC_NAME_VALUE = input("Name of the recipe:")
 				REC_CATEGORY = input("Category of the recipe:")
-				print("Ingredients:")
-				Quit = 0
-        a_ing = str()
-        a_amount = str()
-        a_unit = str()
-        count = 1
-        for Quit != 1:
+        #print("Ingredients:")
+        
+				while 1:
           a_ing = input("name of ingredient %s", str(count))
           if a_ing == "" :
             break
@@ -310,6 +307,7 @@ if __name__=='__main__':
           REC_INGREDIENTS{amounts.append(a_amount)}
           a_unit = input("unit of ingredient %s", str(count))
           REC_INGREDIENTS{units.append(a_unit)}
+          count2 += 1
 
         REC_ING = input("Ingredients:")
         REC_INS = input("Instructions")
