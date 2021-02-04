@@ -295,19 +295,19 @@ if __name__=='__main__':
       try:
         count2 = 0 
         REC_NAME_VALUE = input("Name of the recipe:")
-				REC_CATEGORY = input("Category of the recipe:")
-        #print("Ingredients:")
+	REC_CATEGORY = input("Category of the recipe:")
+        print("Ingredients:")
         
-				while 1:
-          a_ing = input("name of ingredient %s", str(count))
-          if a_ing == "" :
-            break
-          REC_INGREDIENTS{ingredients.append(a_ing)}
-          a_amount = input("amount of ingredient %s", str(count))
-          REC_INGREDIENTS{amounts.append(a_amount)}
-          a_unit = input("unit of ingredient %s", str(count))
-          REC_INGREDIENTS{units.append(a_unit)}
-          count2 += 1
+	while 1:
+		a_ing = input("name of ingredient %s", str(count))	
+		if a_ing == "" :
+			break
+		REC_INGREDIENTS{ingredients.append(a_ing)}
+		a_amount = input("amount of ingredient %s", str(count))
+		REC_INGREDIENTS{amounts.append(a_amount)}
+		a_unit = input("unit of ingredient %s", str(count))
+		REC_INGREDIENTS{units.append(a_unit)}
+		count2 += 1
 
         REC_ING = input("Ingredients:")
         REC_INS = input("Instructions")
