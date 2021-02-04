@@ -29,7 +29,12 @@ REC_INS = str()
 REC_TIME = str()
 REC_UNIT = str()
 REC_PLACE = str()
-
+RI_ING = str()
+THE_ING = str()
+RI_AMOUNT = str()
+THE_AMOUNT = str()
+RI_UNIT = str()
+THE_UNIT = str()
 
 argv_len = len(sys.argv)
 
@@ -151,8 +156,13 @@ def Insert_recipe():
 	except:
 		pass
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
+	c.execute('CREATE TABLE IF NOT EXISTS Recipe_Ing (rec_id text, ri_ing text, ri_amount text, ri_unit)')
+	c.execute('CREATE TABLE IF NOT EXISTS Ings (ri_ing text, the_ing text)')
+	c.execute('CREATE TABLE IF NOT EXISTS Amounts (ri_amount text, the_amount text)')
+	c.execute('CREATE TABLE IF NOT EXISTS Units (ri_unit text, the_unit text)')
 	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (REC_ID , REC_NAME_VALUE , REC_CATEGORY , REC_ING , REC_INS , REC_TIME , REC_UNIT , REC_PLACE))
-	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
+	#####
+  #c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
 def Update_recipe():
