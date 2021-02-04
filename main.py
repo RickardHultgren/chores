@@ -21,6 +21,15 @@ ITEM_EXPIRE = str()
 ITEM_QUANTITY = str()
 ITEM_UNIT = str()
 ITEM_PLACE = str()
+REC_NAME_VALUE = str()
+REC_CATEGORY = str()
+REC_ING = str()
+REC_INS = str()
+REC_TIME = str()
+REC_UNIT = str()
+REC_PLACE = str()
+
+
 argv_len = len(sys.argv)
 
 #conn  = sqlite3.connect('test.db')
@@ -279,27 +288,27 @@ if __name__=='__main__':
 				ITEM_PLACE = raw_input("Place:")
 			Insert_recipe()			
 		if sys.argv[x] == "-rd":
-			ITEM_ID = sys.argv[x+1]  
+			REC_ID = sys.argv[x+1]  
 			Delete_data()
 		if sys.argv[x] == "-ru":
-			ITEM_ID = sys.argv[x+1]
+			REC_ID = sys.argv[x+1]
 			try:
-				ITEM_NAME_VALUE = input("Name of the item:")
-				ITEM_CATEGORY = input("Category of the item:")
-				ITEM_BEGIN = input("Start date:")
-				ITEM_EXPIRE = input("Expiring date:")
-				ITEM_QUANTITY = input("Quantity:")
-				ITEM_UNIT = input("Unit:")
-				ITEM_PLACE = input("Place:")
+				REC_NAME_VALUE = input("Name of the recipe:")
+				REC_CATEGORY = input("Category of the recipe:")
+				REC_ING = input("Start date:")
+				REC_INS = input("Expiring date:")
+				REC_TIME = input("Quantity:")
+				REC_UNIT = input("Unit:")
+				REC_PLACE = input("Place:")
 			except:
-				ITEM_NAME_VALUE = raw_input("Name of the item:")
-				ITEM_CATEGORY = raw_input("Category of the item:")
-				ITEM_BEGIN = raw_input("Start date:")
-				ITEM_EXPIRE = raw_input("Expiring date:")
-				ITEM_QUANTITY = raw_input("Quantity:")
-				ITEM_UNIT = raw_input("Unit:")
-				ITEM_PLACE = raw_input("Place:")
-			
+				REC_NAME_VALUE = raw_input("Name of the recipe:")
+				REC_CATEGORY = raw_input("Category of the recipe:")
+				REC_ING = raw_input("Start date:")
+				REC_INS = raw_input("Expiring date:")
+				REC_TIME = raw_input("Quantity:")
+				REC_UNIT = raw_input("Unit:")
+				REC_PLACE = raw_input("Place:")
+
 			Update_recipe()
 		if sys.argv[x] == "-rl":
 			Get_recipe()
