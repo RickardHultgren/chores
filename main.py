@@ -23,7 +23,7 @@ ITEM_UNIT = str()
 ITEM_PLACE = str()
 REC_NAME_VALUE = str()
 REC_CATEGORY = str()
-REC_ING = str()
+REC_ING = dict("ingredients":ingredients(list), "amounts":amounts(list), "units":units(list))
 REC_INS = str()
 REC_TIME = str()
 REC_UNIT = str()
@@ -295,8 +295,24 @@ if __name__=='__main__':
 			try:
 				REC_NAME_VALUE = input("Name of the recipe:")
 				REC_CATEGORY = input("Category of the recipe:")
-				REC_ING = input("Start date:")
-				REC_INS = input("Expiring date:")
+				print("Ingredients:")
+				Quit = 0
+        a_ing = str()
+        a_amount = str()
+        a_unit = str()
+        count = 1
+        for Quit != 1:
+          a_ing = input("name of ingredient %s", str(count))
+          if a_ing == "" :
+            break
+          REC_INGREDIENTS{ingredients.append(a_ing)}
+          a_amount = input("amount of ingredient %s", str(count))
+          REC_INGREDIENTS{amounts.append(a_amount)}
+          a_unit = input("unit of ingredient %s", str(count))
+          REC_INGREDIENTS{units.append(a_unit)}
+
+        REC_ING = input("Ingredients:")
+        REC_INS = input("Instructions")
 				REC_TIME = input("Quantity:")
 				REC_UNIT = input("Unit:")
 				REC_PLACE = input("Place:")
