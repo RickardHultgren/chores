@@ -140,8 +140,8 @@ def Insert_recipe():
 		ITEM_ID = i
 	except:
 		pass
-	c.execute('CREATE TABLE IF NOT EXISTS Recipes (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
-	c.execute("INSERT INTO Recipes (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
 	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
@@ -149,25 +149,22 @@ def Update_recipe():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('UPDATE Recipes SET item_name = ?, item_category = ?, item_begin = ?,item_expire = ?, item_quantity = ?,item_unit = ?,item_place = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
+	c.execute('UPDATE Recipes SET rec_name = ?,rec_category = ?,rec_ingredients = ?,rec_instruction = ?,rec_time = ?,rec_unit = ?,rec_place = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
 	conn.commit()
 
 def Delete_recipe():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('delete from Recipes where item_id = ?',( ITEM_ID))
+	c.execute('delete from Recipes where rec_id = ?',( ITEM_ID))
 	try:
-		c.execute('create table temp_Recipes as select item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from Recipes order by item_id')
+		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place from Recipes order by rec_id')
 	except:
 		pass
 	c.execute('drop table Recipes')
-	c.execute('CREATE TABLE IF NOT EXISTS Recipes (item_id text,item_name text,item_category text,item_begin text,item_expire text,item_quantity text,item_unit text,item_place text)')
-	c.execute("INSERT INTO Recipes (item_id,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place) select rowid,item_name,item_category,item_begin,item_expire,item_quantity,item_unit,item_place from temp_Recipes order by rowid")
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) select rowid,rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place from temp_Recipes order by rowid")
 	conn.commit()
-
-
-
 
 
 if __name__=='__main__':
