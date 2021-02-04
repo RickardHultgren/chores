@@ -21,9 +21,10 @@ ITEM_EXPIRE = str()
 ITEM_QUANTITY = str()
 ITEM_UNIT = str()
 ITEM_PLACE = str()
+REC_ID = str()
 REC_NAME_VALUE = str()
 REC_CATEGORY = str()
-REC_ING = {"ingredients":ingredients(list), "amounts":amounts(list), "units":units(list)}
+REC_ING = {"ingredients":[], "amounts":[], "units":[]}
 REC_INS = str()
 REC_TIME = str()
 REC_UNIT = str()
@@ -150,7 +151,7 @@ def Insert_recipe():
 	except:
 		pass
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE))
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) VALUES(?, ?, ?, ?, ?, ?, ?, ? )", (REC_ID , REC_NAME_VALUE , REC_CATEGORY , REC_ING , REC_INS , REC_TIME , REC_UNIT , REC_PLACE))
 	#c.execute("INSERT INTO stock VALUES ( ITEM_ID , ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE )")
 	conn.commit()
 
@@ -290,42 +291,53 @@ if __name__=='__main__':
 		if sys.argv[x] == "-rd":
 			REC_ID = sys.argv[x+1]  
 			Delete_data()
-    if sys.argv[x] == "-ru":
-      REC_ID = sys.argv[x+1]
-      try:
-        count2 = 0 
-        REC_NAME_VALUE = input("Name of the recipe:")
-	REC_CATEGORY = input("Category of the recipe:")
-        print("Ingredients:")
+	if sys.argv[x] == "-ru":
+		REC_ID = sys.argv[x+1]
+		try:
+			count2 = 0 
+			REC_NAME_VALUE = input("Name of the recipe:")
+			REC_CATEGORY = input("Category of the recipe:")
+			print("Ingredients:")
         
-	while 1:
-		a_ing = input("name of ingredient %s", str(count))	
-		if a_ing == "" :
-			break
-		REC_INGREDIENTS{ingredients.append(a_ing)}
-		a_amount = input("amount of ingredient %s", str(count))
-		REC_INGREDIENTS{amounts.append(a_amount)}
-		a_unit = input("unit of ingredient %s", str(count))
-		REC_INGREDIENTS{units.append(a_unit)}
-		count2 += 1
+			while 1:
+				a_ing = input("name of ingredient %s", str(count))	
+				if a_ing == "" :
+				  break
+			REC_ING["ingredients"].append(a_ing)
+			a_amount = input("amount of ingredient %s", str(count))
+			REC_ING["amounts"].append(a_amount)
+			a_unit = input("unit of ingredient %s", str(count))
+			REC_ING["units"].append(a_unit)
+			count2 += 1
 
-        REC_ING = input("Ingredients:")
-        REC_INS = input("Instructions")
-				REC_TIME = input("Quantity:")
-				REC_UNIT = input("Unit:")
-				REC_PLACE = input("Place:")
-			except:
-				REC_NAME_VALUE = raw_input("Name of the recipe:")
-				REC_CATEGORY = raw_input("Category of the recipe:")
-				REC_ING = raw_input("Start date:")
-				REC_INS = raw_input("Expiring date:")
-				REC_TIME = raw_input("Quantity:")
-				REC_UNIT = raw_input("Unit:")
-				REC_PLACE = raw_input("Place:")
-
+			#REC_ING = input("Ingredients:")
+			REC_INS = input("Instructions")
+			REC_TIME = input("Quantity:")
+			REC_UNIT = input("Unit:")
+			REC_PLACE = input("Place:")
+		except:
+			REC_NAME_VALUE = raw_input("Name of the recipe:")
+			REC_CATEGORY = raw_input("Category of the recipe:")
+			print("Ingredients:")
+        
+			while 1:
+				a_ing = input("name of ingredient %s", str(count))	
+				if a_ing == "" :
+				  break
+			REC_ING["ingredients"].append(a_ing)
+			a_amount = input("amount of ingredient %s", str(count))
+			REC_ING["amounts"].append(a_amount)
+			a_unit = input("unit of ingredient %s", str(count))
+			REC_ING["units"].append(a_unit)
+			count2 += 1
+			#REC_ING = raw_input("Start date:")
+			REC_INS = raw_input("Expiring date:")
+			REC_TIME = raw_input("Quantity:")
+			REC_UNIT = raw_input("Unit:")
+			REC_PLACE = raw_input("Place:")
 			Update_recipe()
-		if sys.argv[x] == "-rl":
-			Get_recipe()
+	if sys.argv[x] == "-rl":
+		Get_recipe()
 	
 
 	
