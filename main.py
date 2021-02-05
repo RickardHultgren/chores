@@ -142,7 +142,7 @@ def Get_recipe(subarg):
 		cols = str()
 		for index, col in enumerate(row):
 			if index == 0 or index == 1 or index == 2:
-				cols = cols + col
+				cols = cols + " " + col
 		print(cols)
 
 def Insert_recipe():
