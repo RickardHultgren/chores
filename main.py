@@ -139,7 +139,11 @@ def Get_recipe(subarg):
 	#print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
 	for row in cursor: 
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
-		print(row)
+		cols = str()
+		for index, col in enumerate(row):
+			if index == 0 or index == 1 or index == 2:
+				cols = cols + col
+		print(cols)
 
 def Insert_recipe():
 	#global REC_ID
