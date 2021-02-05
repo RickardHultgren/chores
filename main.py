@@ -139,10 +139,72 @@ def Get_recipe(subarg):
 	#print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
 	for row in cursor: 
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
-		cols = str()
-		for index, col in enumerate(row):
+		enough = 0
+		RI_ING = str()
+		RI_AMOUNT = str()
+		RI_UNIT = str()        
+    cols = str()
+    cursor = conn.execute("SELECT * FROM Recipes")
+	 	for index, col in enumerate(row):
+			if index == 0:
+        REC_ING = col
+        
+        ### ### ### ###
+			for rec_index,rec_row in enumerate(cursor): 
+		
 			if index == 0 or index == 1 or index == 2:
 				cols = cols + " " + col
+
+			if index == 1:
+				if check == 1:
+					RI_ING = column
+			if index2 == 2:
+				if check == 1:
+					RI_AMOUNT = column
+			if index2 == 3:
+				if check == 1:
+					RI_UNIT = column
+				check = 0
+
+
+
+	c.execute('delete from Ings where ri_ing = ?',( [RI_ING]))
+	try:
+		c.execute('create table temp_Ings as select ri_ing, the_ing from Ings order by ri_ing')
+	except:
+		pass
+	c.execute('drop table Ings')
+	c.execute('CREATE TABLE IF NOT EXISTS Ings (ri_ing text, the_ing text)')
+	c.execute("INSERT INTO Ings (ri_ing, the_ing) VALUES(?, ? )", (RI_ING, THE_ING))
+
+
+	c.execute('delete from Amounts where ri_amount = ?',( [RI_AMOUNT]))
+	try:
+		c.execute('create table temp_Units as select ri_amount, the_amount from Ings order by ri_amount')
+	except:
+		pass
+	c.execute('drop table Amounts')
+	c.execute('CREATE TABLE IF NOT EXISTS Amounts (ri_amount text, the_amount text)')
+	c.execute("INSERT INTO Amounts (ri_amount, the_amount) VALUES(?, ? )", (RI_AMOUNT, THE_AMOUNT))
+
+
+	c.execute('delete from Units where ri_unit = ?',( [RI_UNIT]))
+	try:
+		c.execute('create table temp_Units as select ri_ing, the_ing from Ings order by ri_ing')
+	except:
+		pass
+	c.execute('drop table Units')
+	c.execute('CREATE TABLE IF NOT EXISTS Units (ri_unit text, the_unit text)')
+	c.execute("INSERT INTO Units (ri_unit, the_unit) VALUES(?, ? )", (RI_UNIT, THE_UNIT))
+
+###
+
+
+
+    if enough == 1:
+			cols = cols + " ENOUGH INGREDIENTS"
+		else:
+			cols = cols + " NOT ENOUGH INGREDIENTS"      
 		print(cols)
 
 def Insert_recipe():
