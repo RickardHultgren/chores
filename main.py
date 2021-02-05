@@ -126,22 +126,23 @@ def Get_recipe(subarg):
 		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_name ASC")
 	if subarg == "cat":
 		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_category ASC")
-	if subarg == "beg":
-		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_begin ASC")
-	if subarg == "exp":
-		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_expire ASC")
-	if subarg == "qua":
-		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_quantity ASC")
-	if subarg == "uni":
-		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_unit ASC")
-	if subarg == "pla":
-		cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_place ASC")
-	print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
+	#if subarg == "beg":
+	#	cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_begin ASC")
+	#if subarg == "exp":
+	#	cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_expire ASC")
+	#if subarg == "qua":
+	#	cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_quantity ASC")
+	#if subarg == "uni":
+	#	cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_unit ASC")
+	#if subarg == "pla":
+	#	cursor = conn.execute("SELECT * FROM Recipes ORDER BY item_place ASC")
+	#print(    "{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format("ID","NAME","CATEGORY","BEGIN","EXPIRE","QUANT","UNIT","PLACE"))
 	for row in cursor: 
-		print("{: >3} {: >20} {: >10} {: >11} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
-		#print(row)
+		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
+		print(row)
 
 def Insert_recipe():
+	#global REC_ID
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
@@ -153,7 +154,7 @@ def Insert_recipe():
 		cursor = conn.execute("SELECT * FROM Recipes") 
 		for row in cursor: 
 			i = i + 1
-		ITEM_ID = i
+		REC_ID = i
 	except:
 		pass
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
@@ -199,11 +200,33 @@ def Update_recipe():
 	conn.commit()
 
 def Delete_recipe():
-
+	global REC_ID
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
 	
+	cursor = conn.execute("SELECT * FROM Recipes")
+	check = 0
+	for index,row in enumerate(cursor): 
+		for index2, column in enumerate(row):
+			
+			#print(index2)
+			if index2 == 0:
+				if column == REC_ID:
+					check = 1
+			if index2 == 1:
+				if check == 1:
+					RI_ING = column
+			if index2 == 2:
+				if check == 1:
+					RI_AMOUNT = column
+			if index2 == 3:
+				if check == 1:
+					RI_UNIT = column
+				check = 0
+
+
+
 	c.execute('delete from Ings where ri_ing = ?',( RI_ING))
 	try:
 		c.execute('create table temp_Ings as select ri_ing, the_ing from Ings order by ri_ing')
@@ -413,7 +436,7 @@ if __name__=='__main__':
 			Insert_recipe()			
 		if sys.argv[x] == "-rd":
 			REC_ID = sys.argv[x+1]  
-			Delete_data()
+			Delete_recipe()
 		if sys.argv[x] == "-ru":
 			ITEM_ID = str(dblength+1)
 			try:
