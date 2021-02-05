@@ -72,7 +72,7 @@ def Get_data(subarg):
 def Insert_data():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
-	#global c
+	global ITEM_ID
 
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()	
@@ -207,6 +207,9 @@ def Delete_recipe():
 	
 	cursor = conn.execute("SELECT * FROM Recipes")
 	check = 0
+	RI_ING = str()
+	RI_AMOUNT = str()
+	RI_UNIT = str()
 	for index,row in enumerate(cursor): 
 		for index2, column in enumerate(row):
 			
@@ -227,7 +230,7 @@ def Delete_recipe():
 
 
 
-	c.execute('delete from Ings where ri_ing = ?',( RI_ING))
+	c.execute('delete from Ings where ri_ing = ?',( [RI_ING]))
 	try:
 		c.execute('create table temp_Ings as select ri_ing, the_ing from Ings order by ri_ing')
 	except:
@@ -237,35 +240,35 @@ def Delete_recipe():
 	c.execute("INSERT INTO Ings (ri_ing, the_ing) VALUES(?, ? )", (RI_ING, THE_ING))
 
 
-	c.execute('delete from Units where ri_ing = ?',( RI_AMOUNT))
+	c.execute('delete from Amounts where ri_amount = ?',( [RI_AMOUNT]))
 	try:
 		c.execute('create table temp_Units as select ri_amount, the_amount from Ings order by ri_amount')
 	except:
 		pass
-	c.execute('drop table Amount')
-	c.execute('CREATE TABLE IF NOT EXISTS Units (ri_amount text, the_amount text)')
-	c.execute("INSERT INTO Amount (ri_amount, the_amount) VALUES(?, ? )", (RI_AMOUNT, THE_AMOUNT))
+	c.execute('drop table Amounts')
+	c.execute('CREATE TABLE IF NOT EXISTS Amounts (ri_amount text, the_amount text)')
+	c.execute("INSERT INTO Amounts (ri_amount, the_amount) VALUES(?, ? )", (RI_AMOUNT, THE_AMOUNT))
 
 
-	c.execute('delete from Units where ri_unit = ?',( RI_UNIT))
+	c.execute('delete from Units where ri_unit = ?',( [RI_UNIT]))
 	try:
 		c.execute('create table temp_Units as select ri_ing, the_ing from Ings order by ri_ing')
 	except:
 		pass
 	c.execute('drop table Units')
 	c.execute('CREATE TABLE IF NOT EXISTS Units (ri_unit text, the_unit text)')
-	c.execute("INSERT INTO Ings (ri_unit, the_unit) VALUES(?, ? )", (RI_UNIT, THE_UNIT))
+	c.execute("INSERT INTO Units (ri_unit, the_unit) VALUES(?, ? )", (RI_UNIT, THE_UNIT))
 
 ###
 	c.execute('CREATE TABLE IF NOT EXISTS Rec_Ing (rec_id text, ri_ing text, ri_amount text, ri_unit)')
-	c.execute('delete from Rec_Ings where rec_id = ?',( REC_ID))
+	c.execute('delete from Rec_Ing where rec_id = ?',( REC_ID))
 	try:
 		c.execute('create table temp_Rec_Ings as select rec_id text, ri_ing text, ri_amount text, ri_unit from Ings order by rec_id')
 	except:
 		pass
-	c.execute('drop table Rec_Ings')
-	c.execute('CREATE TABLE IF NOT EXISTS Rec_Ings (rec_id text, ri_ing text, ri_amount text, ri_unit)')
-	c.execute("INSERT INTO Rec_Ings (rec_id, ri_ing, ri_amount, ri_unit) VALUES(?, ?, ?, ?)", (REC_ID, RI_ING, RI_AMOUNT, RI_UNIT))
+	c.execute('drop table Rec_Ing')
+	c.execute('CREATE TABLE IF NOT EXISTS Rec_Ing (rec_id text, ri_ing text, ri_amount text, ri_unit)')
+	c.execute("INSERT INTO Rec_Ing (rec_id, ri_ing, ri_amount, ri_unit) VALUES(?, ?, ?, ?)", (REC_ID, RI_ING, RI_AMOUNT, RI_UNIT))
 
 	
 	c.execute('delete from Recipes where rec_id = ?',( REC_ID))
@@ -275,7 +278,7 @@ def Delete_recipe():
 		pass
 	c.execute('drop table Recipes')
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place) select rowid,rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place from temp_Recipes order by rowid")
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place) select rowid,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place from temp_Recipes order by rowid")
 	
 	
 	
@@ -286,14 +289,14 @@ def Delete_recipe():
 
 
 ###
-	c.execute('delete from Recipes where rec_id = ?',( ITEM_ID))
+	c.execute('delete from Recipes where rec_id = ?',( REC_ID))
 	try:
 		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place from Recipes order by rec_id')
 	except:
 		pass
 	c.execute('drop table Recipes')
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_unit text,rec_place text)')
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place) select rowid,rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_unit,rec_place from temp_Recipes order by rowid")
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place) select rowid,rec_name,rec_category,rec_instruction,rec_time,rec_unit,rec_place from temp_Recipes order by rowid")
 	conn.commit()
 
 
