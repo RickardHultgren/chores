@@ -128,7 +128,7 @@ def Get_recipe(subarg):
 	if subarg == "cat":
 		rec_c = conn.execute("SELECT * FROM Recipes ORDER BY item_category ASC")
 	for row in rec_c:
-		print row
+		print(row)
 	exit()
 	
 	rec_c = conn.execute("SELECT * FROM Recipes")
