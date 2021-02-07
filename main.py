@@ -212,9 +212,8 @@ def Show_recipe():
 							if ing_col_index == 2 and the_ings == REC_ING :
 								RI_UNIT = ing_col
 					print(RI_ING + RI_UNIT + RI_UNIT)
-			exit()				
-																								'''
-					if ing_index == 1 and check_rec_ing == 1 :
+			exit()																							'''
+			if ing_index == 1 and check_rec_ing == 1 :
 								RI_ING = the_ing
 					for amount_index, the_amounts in enumerate(amount_c):
 						if amount_index == 0 and the_amounts == REC_AMOUNT :
