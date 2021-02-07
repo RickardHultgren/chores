@@ -173,7 +173,7 @@ def Get_recipe(subarg):
 					for cursed_index, cursed_col in enumerate(cursor):
 						if cursed_index == 1 and cursed_col == RI_ING :
 							check_cursed_ing = 1
-						if cursed_index == 5 and check_cursed_ing = 1 :
+						if cursed_index == 5 and check_cursed_ing == 1 :
 							RI_ING =  cursed_col
 
 ### ### ###
@@ -214,7 +214,7 @@ def Show_recipe():
 					print(RI_ING + RI_UNIT + RI_UNIT)
 			exit()				
 																								'''
-							if ing_index == 1 and check_rec_ing == 1 :
+					if ing_index == 1 and check_rec_ing == 1 :
 								RI_ING = the_ing
 					for amount_index, the_amounts in enumerate(amount_c):
 						if amount_index == 0 and the_amounts == REC_AMOUNT :
