@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 import sqlite3
 import os
@@ -120,7 +119,7 @@ def Get_recipe(subarg):
 	i=1
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
-	cursor = conn.execute("SELECT * FROM Things") 
+	cursor = conn.execute("SELECT * FROM Recipes") 
 	conn  = sqlite3.connect('test.db')
 	if subarg == "id":
 		rec_c = conn.execute("SELECT * FROM Recipes") 
@@ -243,7 +242,7 @@ def Show_recipe():
 	
 				
 def Insert_recipe():
-	#global REC_ID
+	global REC_ID
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
@@ -610,4 +609,3 @@ if __name__=='__main__':
 			pass
 		Get_recipe(subarg)
 	
-
