@@ -149,7 +149,7 @@ def Get_recipe(subarg):
 		portions_check = 0
 		for rec_index, rec_col in enumerate(rec_row) :
 			if rec_index == 0 :
-				REC_ING = rec_col
+				REC_ID = rec_col
 				check_rec_ing = 0
 				for ing_index, the_ings in enumerate(ing_c):
 					if ing_index == 0 and the_ings == REC_ING :
@@ -179,6 +179,7 @@ def Get_recipe(subarg):
 ### ### ###
 
 def Show_recipe():
+	global REC_ID
 	conn  = sqlite3.connect('test.db')
 	rec_c = conn.execute("SELECT * FROM Recipes") 
 	
@@ -203,7 +204,7 @@ def Show_recipe():
 			for rec_col_index, rec_col in enumerate(rec_row) :
 				if rec_col_index == 0 and rec_col == REC_ID:
 					print("\n")
-					REC_ING = rec_col
+					REC_ID = rec_col
 					check_rec_ing = 1
 					
 			for ing_row_index, the_ings in enumerate(ing_c):
