@@ -197,11 +197,11 @@ def Show_recipe():
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
 		#check
 		#if rec_row_index == 0 and rec_row == REC_ID:
-			#print(rec_row + "\n")
+			print(rec_row + "\n")
 			### ### ### ###
 			for rec_col_index, rec_col in enumerate(rec_row) :
 				if rec_col_index == 0 and rec_col == REC_ID:
-					print(rec_row + "\n")
+					print("\n")
 					REC_ING = rec_col
 
 					
