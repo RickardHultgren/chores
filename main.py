@@ -197,24 +197,31 @@ def Show_recipe():
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
 		#check
 		#if rec_row_index == 0 and rec_row == REC_ID:
-			print(rec_row + "\n")
+			print(rec_row)
 			### ### ### ###
+			check_rec_ing = 0
 			for rec_col_index, rec_col in enumerate(rec_row) :
 				if rec_col_index == 0 and rec_col == REC_ID:
 					print("\n")
 					REC_ING = rec_col
-
+					check_rec_ing = 1
 					
-					for ing_row_index, the_ings in enumerate(ing_c):
+			for ing_row_index, the_ings in enumerate(ing_c):
 						for ing_col_index, ing_col in enumerate(the_ings):
 							check_rec_ing = 0
-							if ing_col_index == 1 and the_ings == REC_ING :
+							if ing_col_index == 0:# and the_ings == REC_ING :
 								RI_ING = ing_col
-							if ing_col_index == 1 and the_ings == REC_ING :
-								RI_AMOUNT = ing_col
-							if ing_col_index == 2 and the_ings == REC_ING :
-								RI_UNIT = ing_col
-					print(RI_ING + RI_UNIT + RI_UNIT)
+			for amount_row_index, the_amounts in enumerate(amount_c):
+						for amount_col_index, amount_col in enumerate(the_amounts):
+							check_rec_amount = 0
+							if amount_col_index == 1:# and the_amounts == REC_ING :
+								RI_AMOUNT = amount_col
+			for unit_row_index, the_units in enumerate(ing_c):
+						for unit_col_index, unit_col in enumerate(the_units):
+							check_rec_unit = 0
+							if unit_col_index == 2:# and the_units == REC_ING :
+								RI_UNIT = unit_col
+			print(RI_ING + RI_AMOUNT + RI_UNIT)
 	exit()											
 '''												
 			if ing_index == 1 and check_rec_ing == 1 :
