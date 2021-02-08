@@ -263,9 +263,9 @@ def Insert_recipe():
 		cursor = conn.execute("SELECT * FROM Recipes") 
 		for row in cursor: 
 			i = i + 1
-		REC_ID = i
 	except:
 		pass
+	REC_ID = i
 	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_quanitity text,rec_unit text,rec_timeMINUTES text)')
 	c.execute('CREATE TABLE IF NOT EXISTS Rec_Ing (rec_id text, ri_ing text, ri_amount text, ri_unit)')
 	c.execute('CREATE TABLE IF NOT EXISTS Ings (ri_ing text, the_ing text)')
