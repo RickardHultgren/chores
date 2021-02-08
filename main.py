@@ -510,21 +510,21 @@ if __name__=='__main__':
 				print("Ingredients:")
 	        
 				while 1:
-					a_ing = input("name of ingredient" + str(count))	
+					a_ing = input("name of ingredient " + str(count) +  ": ")	
 					if a_ing == "" :
 					  break
 					REC_ING["ingredients"].append(a_ing)
-					a_amount = input("amount of ingredient" + str(count))
+					a_amount = input("amount of ingredient " + str(count) +  ": ")
 					REC_ING["amounts"].append(a_amount)
-					a_unit = input("unit of ingredient" + str(count))
+					a_unit = input("unit of ingredient " + str(count) +  ": ")
 					REC_ING["units"].append(a_unit)
 					count += 1
 	
 				#REC_ING = input("Ingredients:")
-				REC_INS = input("Instructions")
-				REC_quanitity = input("Quantity:")
+				REC_INS = input("Instructions: ")
+				REC_quanitity = input("Quantity: ")
 				REC_UNIT = input("Unit:")
-				REC_timeMINUTES = input("Place:")
+				REC_timeMINUTES = input("Time in minutes: ")
 			except:
 				REC_NAME_VALUE = raw_input("Name of the recipe:")
 				REC_CATEGORY = raw_input("Category of the recipe:")
