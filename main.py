@@ -196,11 +196,12 @@ def Show_recipe():
 	for rec_row_index, rec_row in enumerate(rec_c): 
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
 		#check
-		if rec_row_index == 0 and rec_row == REC_ID:
-			print(rec_row + "\n")
+		#if rec_row_index == 0 and rec_row == REC_ID:
+			#print(rec_row + "\n")
 			### ### ### ###
 			for rec_col_index, rec_col in enumerate(rec_row) :
-				if rec_index == 0 :
+				if rec_col_index == 0 and rec_col == REC_ID:
+					print(rec_row + "\n")
 					REC_ING = rec_col
 
 					
@@ -214,7 +215,7 @@ def Show_recipe():
 							if ing_col_index == 2 and the_ings == REC_ING :
 								RI_UNIT = ing_col
 					print(RI_ING + RI_UNIT + RI_UNIT)
-			exit()											
+	exit()											
 '''												
 			if ing_index == 1 and check_rec_ing == 1 :
 								RI_ING = the_ing
@@ -540,7 +541,7 @@ if __name__=='__main__':
 		if sys.argv[x] == "-rd":
 			REC_ID = sys.argv[x+1]  
 			Delete_recipe()
-		if sys.argv[x] == "-s":
+		if sys.argv[x] == "-rs":
 			REC_ID = sys.argv[x+1]  
 			Show_recipe()			
 		if sys.argv[x] == "-ru":
