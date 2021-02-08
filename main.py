@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sqlite3
 import os
@@ -120,7 +121,7 @@ def Get_recipe(subarg):
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	cursor = conn.execute("SELECT * FROM Things") 
-	#global c
+	conn  = sqlite3.connect('test.db')
 	if subarg == "id":
 		rec_c = conn.execute("SELECT * FROM Recipes") 
 	if subarg == "nam":
@@ -179,6 +180,7 @@ def Get_recipe(subarg):
 ### ### ###
 
 def Show_recipe():
+	conn  = sqlite3.connect('test.db')
 	rec_c = conn.execute("SELECT * FROM Recipes") 
 	
 	rec_c = conn.execute("SELECT * FROM Recipes")
@@ -201,6 +203,7 @@ def Show_recipe():
 			for rec_col_index, rec_col in enumerate(rec_row) :
 				if rec_index == 0 :
 					REC_ING = rec_col
+
 					
 					for ing_row_index, the_ings in enumerate(ing_c):
 						for ing_col_index, ing_col in enumerate(the_ings):
@@ -212,7 +215,8 @@ def Show_recipe():
 							if ing_col_index == 2 and the_ings == REC_ING :
 								RI_UNIT = ing_col
 					print(RI_ING + RI_UNIT + RI_UNIT)
-			exit()																							'''
+			exit()											
+'''												
 			if ing_index == 1 and check_rec_ing == 1 :
 								RI_ING = the_ing
 					for amount_index, the_amounts in enumerate(amount_c):
@@ -606,3 +610,4 @@ if __name__=='__main__':
 			pass
 		Get_recipe(subarg)
 	
+
