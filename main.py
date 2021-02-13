@@ -26,9 +26,9 @@ REC_NAME_VALUE = str()
 REC_CATEGORY = str()
 REC_ING = {"ingredients":[], "amounts":[], "units":[]}
 REC_INS = str()
-REC_quanitity = str()
-REC_UNIT = str()
-REC_timeMINUTES = str()
+REC_TIME = str()
+REC_PORUNIT = str()
+REC_PORTIONS = str()
 RI_ING = str()
 THE_ING = str()
 RI_AMOUNT = str()
@@ -149,7 +149,7 @@ def Get_recipe(subarg):
 		portions_check = 0
 		for rec_index, rec_col in enumerate(rec_row) :
 			if rec_index == 0 :
-				REC_ID = rec_col
+				REC_ING = rec_col
 				check_rec_ing = 0
 				for ing_index, the_ings in enumerate(ing_c):
 					if ing_index == 0 and the_ings == REC_ING :
@@ -162,9 +162,9 @@ def Get_recipe(subarg):
 					if amount_index == 1 and check_rec_amount == 1 :
 						RI_ING = the_amount
 				for unit_index, the_units in enumerate(unit_c):
-					if unit_index == 0 and the_units == REC_UNIT :
-						check_rec_unit = 1
-					if unit_index == 1 and check_rec_unit == 1 :
+					if unit_index == 0 and the_units == REC_PORUNIT :
+						check_rec_porunit = 1
+					if unit_index == 1 and check_rec_porunit == 1 :
 						RI_ING = the_unit						
 
 
@@ -179,7 +179,6 @@ def Get_recipe(subarg):
 ### ### ###
 
 def Show_recipe():
-	global REC_ID
 	conn  = sqlite3.connect('test.db')
 	rec_c = conn.execute("SELECT * FROM Recipes") 
 	
@@ -197,33 +196,25 @@ def Show_recipe():
 	for rec_row_index, rec_row in enumerate(rec_c): 
 		#print("{: >3} {: >20} {: >10} {: >11} {: >5} {: >5} {: >10}\n".format(*row))
 		#check
-		#if rec_row_index == 0 and rec_row == REC_ID:
-			print(rec_row)
+		if rec_row_index == 0 and rec_row == REC_ID:
+			print(rec_row + "\n")
 			### ### ### ###
-			check_rec_ing = 0
 			for rec_col_index, rec_col in enumerate(rec_row) :
-				if rec_col_index == 0 and rec_col == REC_ID:
-					print("\n")
-					REC_ID = rec_col
-					check_rec_ing = 1
+				if rec_index == 0 :
+					REC_ING = rec_col
+
 					
-			for ing_row_index, the_ings in enumerate(ing_c):
+					for ing_row_index, the_ings in enumerate(ing_c):
 						for ing_col_index, ing_col in enumerate(the_ings):
 							check_rec_ing = 0
-							if ing_col_index == 0:# and the_ings == REC_ING :
+							if ing_col_index == 1 and the_ings == REC_ING :
 								RI_ING = ing_col
-			for amount_row_index, the_amounts in enumerate(amount_c):
-						for amount_col_index, amount_col in enumerate(the_amounts):
-							check_rec_amount = 0
-							if amount_col_index == 1:# and the_amounts == REC_ING :
-								RI_AMOUNT = amount_col
-			for unit_row_index, the_units in enumerate(ing_c):
-						for unit_col_index, unit_col in enumerate(the_units):
-							check_rec_unit = 0
-							if unit_col_index == 2:# and the_units == REC_ING :
-								RI_UNIT = unit_col
-			print(RI_ING + RI_AMOUNT + RI_UNIT)
-	exit()											
+							if ing_col_index == 1 and the_ings == REC_ING :
+								RI_AMOUNT = ing_col
+							if ing_col_index == 2 and the_ings == REC_ING :
+								RI_UNIT = ing_col
+					print(RI_ING + RI_UNIT + RI_UNIT)
+			exit()											
 '''												
 			if ing_index == 1 and check_rec_ing == 1 :
 								RI_ING = the_ing
@@ -233,9 +224,9 @@ def Show_recipe():
 						if amount_index == 1 and check_rec_amount == 1 :
 							RI_ING = the_amount
 					for unit_index, the_units in enumerate(unit_c):
-						if unit_index == 0 and the_units == REC_UNIT :
-							check_rec_unit = 1
-						if unit_index == 1 and check_rec_unit == 1 :
+						if unit_index == 0 and the_units == REC_PORUNIT :
+							check_rec_porunit = 1
+						if unit_index == 1 and check_rec_porunit == 1 :
 							RI_ING = the_unit						
 
 
@@ -263,17 +254,17 @@ def Insert_recipe():
 		cursor = conn.execute("SELECT * FROM Recipes") 
 		for row in cursor: 
 			i = i + 1
+		REC_ID = i
 	except:
 		pass
-	REC_ID = i
-	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_quanitity text,rec_unit text,rec_timeMINUTES text)')
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_porunit text,rec_portions text)')
 	c.execute('CREATE TABLE IF NOT EXISTS Rec_Ing (rec_id text, ri_ing text, ri_amount text, ri_unit)')
 	c.execute('CREATE TABLE IF NOT EXISTS Ings (ri_ing text, the_ing text)')
 	c.execute('CREATE TABLE IF NOT EXISTS Amounts (ri_amount text, the_amount text)')
 	c.execute('CREATE TABLE IF NOT EXISTS Units (ri_unit text, the_unit text)')
 	conn.commit()
 
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES) VALUES(?, ?, ?, ?, ?, ?, ? )", (REC_ID , REC_NAME_VALUE , REC_CATEGORY , REC_INS , REC_quanitity , REC_UNIT , REC_timeMINUTES))
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions) VALUES(?, ?, ?, ?, ?, ?, ? )", (REC_ID , REC_NAME_VALUE , REC_CATEGORY , REC_INS , REC_TIME , REC_PORUNIT , REC_PORTIONS))
 	
 	for indexing, ing_row in enumerate(REC_ING["ingredients"]):
 		RI_ING = REC_ING["ingredients"][indexing]
@@ -305,7 +296,7 @@ def Update_recipe():
 	conn  = sqlite3.connect('test.db')
 	c = conn.cursor()
 	#global c
-	c.execute('UPDATE Recipes SET rec_name = ?,rec_category = ?,rec_ingredients = ?,rec_instruction = ?,rec_quanitity = ?,rec_unit = ?,rec_timeMINUTES = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
+	c.execute('UPDATE Recipes SET rec_name = ?,rec_category = ?,rec_ingredients = ?,rec_instruction = ?,rec_time = ?,rec_porunit = ?,rec_portions = ? WHERE item_id = ?', (ITEM_NAME_VALUE , ITEM_CATEGORY , ITEM_BEGIN , ITEM_EXPIRE , ITEM_QUANTITY , ITEM_UNIT , ITEM_PLACE,  ITEM_ID))
 	conn.commit()
 
 def Delete_recipe():
@@ -382,12 +373,12 @@ def Delete_recipe():
 	
 	c.execute('delete from Recipes where rec_id = ?',( REC_ID))
 	try:
-		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES from Recipes order by rec_id')
+		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions from Recipes order by rec_id')
 	except:
 		pass
 	c.execute('drop table Recipes')
-	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_instruction text,rec_quanitity text,rec_unit text,rec_timeMINUTES text)')
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES) select rowid,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES from temp_Recipes order by rowid")
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_instruction text,rec_time text,rec_porunit text,rec_portions text)')
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions) select rowid,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions from temp_Recipes order by rowid")
 	
 	
 	
@@ -400,12 +391,12 @@ def Delete_recipe():
 ###
 	c.execute('delete from Recipes where rec_id = ?',( REC_ID))
 	try:
-		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES from Recipes order by rec_id')
+		c.execute('create table temp_Recipes as select rec_id,rec_name,rec_category,rec_ingredients,rec_instruction,rec_time,rec_porunit,rec_portions from Recipes order by rec_id')
 	except:
 		pass
 	c.execute('drop table Recipes')
-	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_quanitity text,rec_unit text,rec_timeMINUTES text)')
-	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES) select rowid,rec_name,rec_category,rec_instruction,rec_quanitity,rec_unit,rec_timeMINUTES from temp_Recipes order by rowid")
+	c.execute('CREATE TABLE IF NOT EXISTS Recipes (rec_id text,rec_name text,rec_category text,rec_ingredients text,rec_instruction text,rec_time text,rec_porunit text,rec_portions text)')
+	c.execute("INSERT INTO Recipes (rec_id,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions) select rowid,rec_name,rec_category,rec_instruction,rec_time,rec_porunit,rec_portions from temp_Recipes order by rowid")
 	conn.commit()
 
 
@@ -510,21 +501,21 @@ if __name__=='__main__':
 				print("Ingredients:")
 	        
 				while 1:
-					a_ing = input("name of ingredient " + str(count) +  ": ")	
+					a_ing = input("name of ingredient" + str(count))	
 					if a_ing == "" :
 					  break
 					REC_ING["ingredients"].append(a_ing)
-					a_amount = input("amount of ingredient " + str(count) +  ": ")
+					a_amount = input("amount of ingredient" + str(count))
 					REC_ING["amounts"].append(a_amount)
-					a_unit = input("unit of ingredient " + str(count) +  ": ")
+					a_unit = input("unit of ingredient" + str(count))
 					REC_ING["units"].append(a_unit)
 					count += 1
 	
 				#REC_ING = input("Ingredients:")
-				REC_INS = input("Instructions: ")
-				REC_quanitity = input("Quantity: ")
-				REC_UNIT = input("Unit:")
-				REC_timeMINUTES = input("Time in minutes: ")
+				REC_INS = input("Instructions")
+				REC_TIME = input("Quantity:")
+				REC_PORUNIT = input("Unit:")
+				REC_PORTIONS = input("Place:")
 			except:
 				REC_NAME_VALUE = raw_input("Name of the recipe:")
 				REC_CATEGORY = raw_input("Category of the recipe:")
@@ -542,14 +533,14 @@ if __name__=='__main__':
 					count += 1
 				#REC_ING = raw_input("Start date:")
 				REC_INS = raw_input("Expiring date:")
-				REC_quanitity = raw_input("Quantity:")
-				REC_UNIT = raw_input("Unit:")
-				REC_timeMINUTES = raw_input("Place:")
+				REC_TIME = raw_input("Quantity:")
+				REC_PORUNIT = raw_input("Unit:")
+				REC_PORTIONS = raw_input("Place:")
 			Insert_recipe()			
 		if sys.argv[x] == "-rd":
 			REC_ID = sys.argv[x+1]  
 			Delete_recipe()
-		if sys.argv[x] == "-rs":
+		if sys.argv[x] == "-s":
 			REC_ID = sys.argv[x+1]  
 			Show_recipe()			
 		if sys.argv[x] == "-ru":
@@ -573,9 +564,9 @@ if __name__=='__main__':
 	
 				#REC_ING = input("Ingredients:")
 				REC_INS = input("Instructions")
-				REC_quanitity = input("Quantity:")
-				REC_UNIT = input("Unit:")
-				REC_timeMINUTES = input("Portions")
+				REC_TIME = input("Quantity:")
+				REC_PORUNIT = input("Unit:")
+				REC_PORTIONS = input("Portions")
 			except:
 				REC_NAME_VALUE = raw_input("Name of the recipe:")
 				REC_CATEGORY = raw_input("Category of the recipe:")
@@ -593,9 +584,9 @@ if __name__=='__main__':
 					count += 1
 				#REC_ING = raw_input("Start date:")
 				REC_INS = raw_input("Expiring date:")
-				REC_quanitity = raw_input("Quantity:")
-				REC_UNIT = raw_input("Unit:")
-				REC_timeMINUTES = raw_input("Portions:")
+				REC_TIME = raw_input("Quantity:")
+				REC_PORUNIT = raw_input("Unit:")
+				REC_PORTIONS = raw_input("Portions:")
 			Insert_recipe()			
 	if sys.argv[x] == "-rl":
 		subarg = str("id")
